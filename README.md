@@ -30,7 +30,7 @@ Follow these steps to set up the project on your local machine:
    cd frontend
    ```
 
-   for Frontend developers
+   for Backend developers
 
    ```
    cd backend
