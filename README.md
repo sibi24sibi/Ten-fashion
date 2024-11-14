@@ -30,7 +30,7 @@ Follow these steps to set up the project on your local machine:
    cd frontend
    ```
 
-   for Frontend developers
+   for Backend developers
 
    ```
    cd backend
@@ -84,7 +84,7 @@ We welcome contributions! If you'd like to contribute to this project, please fo
 follw the rules to develop the application
 
 1. Dont install any npm package with information
-2. Use flowbite react ui for fronten developement
+2. Use flowbite react ui for frontend developement
 3. Push the code to seperate branch for every features
 4. Make the site mobile reponsive and both light and dark mode enabled
 
