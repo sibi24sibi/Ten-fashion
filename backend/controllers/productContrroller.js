@@ -1,6 +1,5 @@
 const Product = require("../models/product");
 
-// Create a new product
 const createProduct = async (req, res) => {
   try {
     if (!req.file) {
@@ -18,7 +17,7 @@ const createProduct = async (req, res) => {
 
     res.status(201).json(createdProducts);
   } catch (error) {
-    console.error(error); // Log the error to understand the issue
+    console.error(error);
     res.status(500).json({ message: "Error saving product", error });
   }
 };
@@ -33,18 +32,6 @@ const getProducts = async (req, res) => {
   }
 };
 
-// controllers/uploadController.js
-const uploadImage = (req, res) => {
-  if (req.file) {
-    res.status(200).json({
-      message: "Image uploaded successfully",
-      url: req.file.path,
-    });
-  } else {
-    res.status(400).json({ error: "Image upload failed" });
-  }
-};
-
 module.exports = {};
 
-module.exports = { createProduct, getProducts, uploadImage };
+module.exports = { createProduct, getProducts };
