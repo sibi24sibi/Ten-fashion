@@ -1,5 +1,6 @@
 const Product = require("../models/product");
 
+// Create a new product
 const createProduct = async (req, res) => {
   try {
     if (!req.file) {
@@ -31,7 +32,5 @@ const getProducts = async (req, res) => {
     res.status(500).json({ message: "Error fetching products", error });
   }
 };
-
-module.exports = {};
 
 module.exports = { createProduct, getProducts };

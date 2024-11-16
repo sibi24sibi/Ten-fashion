@@ -1,10 +1,20 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';  // Import Axios
-import './App.css';
-import { ProductCard } from './Components/ProductCard';
-import { ProductForm } from './Components/ProductForm';
+import { useEffect, useState } from "react";
+import "./App.css";
+import Navbar from "../src/components/Navbar/Navbar";
+import Footer from "../src/components/Footer/Footer";
+import SignupForm from "./components/SignupForm/SignupForm";
+import LoginForm from "./components/LoginForm/LoginForm";
+import { ProductCard } from "./Components/ProductCard";
+import { ProductForm } from "./Components/ProductForm";
+import axios from "axios";
 
 function App() {
+  const [isSignup, setIsSignup] = useState(false);
+
+  const toggleForm = () => {
+    setIsSignup(!isSignup);
+  };
+
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -13,12 +23,38 @@ function App() {
       .catch((error) => console.error('Error fetching products:', error));
   }, [products]);
 
+
+
+
   return (
-    <div className="container mx-auto p-4">
-      <ProductCard data={products} />
+    <div className="dark:bg-gray-700 h-screen flex flex-col">
+      <Navbar />
+      <div className="flex flex-grow items-center justify-center p-4">
+        <div className="w-full max-w-4xl text-center px-4 md:px-0">
+          <span className="text-2xl text-gray-800 dark:text-white font-semibold">
+            {isSignup ? "Sign Up" : "Login"}
+          </span>
+          <div className="mt-4 flex justify-center items-center w-full">
+            {/* Conditional rendering of Signup or Login form */}
+            {isSignup ? <SignupForm /> : <LoginForm />}
+          </div>
+          <div className="flex justify-center mt-4">
+            <span
+              onClick={toggleForm}
+              className="px-4 text-gray-600 hover:underline rounded cursor-pointer dark:text-white"
+            >
+              {isSignup
+                ? "Already have an account? Log In"
+                : "Don't have an account? Sign Up"}
+            </span>
+          </div>
+        </div>
+        <ProductCard data={products} />
 
-      <ProductForm />
+        <ProductForm />
 
+      </div>
+      <Footer />
     </div>
   );
 }
