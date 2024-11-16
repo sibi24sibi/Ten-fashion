@@ -7,6 +7,7 @@ import LoginForm from "./components/LoginForm/LoginForm";
 import { ProductCard } from "./Components/ProductCard";
 import { ProductForm } from "./Components/ProductForm";
 import axios from "axios";
+import { Shopping_Cart } from './components/Shopping-Cart/Shopping_Cart'
 
 function App() {
   const [isSignup, setIsSignup] = useState(false);
@@ -35,7 +36,7 @@ function App() {
             {isSignup ? "Sign Up" : "Login"}
           </span>
           <div className="mt-4 flex justify-center items-center w-full">
-            {/* Conditional rendering of Signup or Login form */}
+
             {isSignup ? <SignupForm /> : <LoginForm />}
           </div>
           <div className="flex justify-center mt-4">
@@ -49,9 +50,8 @@ function App() {
             </span>
           </div>
         </div>
-        <ProductCard data={products} />
 
-        <ProductForm />
+
 
       </div>
       <Footer />
@@ -60,3 +60,6 @@ function App() {
 }
 
 export default App;
+
+
+

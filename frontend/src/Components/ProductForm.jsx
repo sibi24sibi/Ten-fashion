@@ -117,7 +117,7 @@ export const ProductForm = () => {
 
             // Append the image file
             if (formData.image) {
-                form.append("image", formData.image);
+                form.append("images", formData.image);
             }
 
             // Send the form data to the backend
