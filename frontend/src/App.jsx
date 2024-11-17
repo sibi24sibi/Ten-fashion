@@ -8,6 +8,7 @@ import { ProductCard } from "./Components/ProductCard";
 import { ProductForm } from "./Components/ProductForm";
 import axios from "axios";
 import { Shopping_Cart } from './components/Shopping-Cart/Shopping_Cart'
+import ContactForm from "./pages/ContactPage";
 
 function App() {
   const [isSignup, setIsSignup] = useState(false);
@@ -52,8 +53,10 @@ function App() {
         </div>
 
 
+      <ContactForm/>
 
       </div>
+
       <Footer />
     </div>
   );
