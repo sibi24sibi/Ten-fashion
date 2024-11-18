@@ -1,4 +1,29 @@
+import axios from "axios";
+import { useState } from "react";
+
 export const ProductCard = ({ data }) => {
+
+
+
+    // const handleViewProduct = (productId) => {
+    //     navigate(`/product/${productId}`);
+    // };
+
+    const [quantity] = useState(1);
+
+
+    const handleAddToCart = async (productId, quantity) => {
+        try {
+            const response = await axios.post('http://localhost:8000/cartItem', { productId, quantity })
+
+            console.log('Added product to cart:', response.data);
+        }
+        catch (err) {
+            console.error('Error adding product to cart:', err.message);
+            console.log("Failed to add product to cart");
+        }
+    }
+
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {data.map((datas, index) => (
@@ -46,8 +71,17 @@ export const ProductCard = ({ data }) => {
                             <span className="text-3xl font-bold text-gray-900 dark:text-white">
                                 ${datas.price}
                             </span>
-                            <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            <button
+                                onClick={() => handleAddToCart(datas._id, quantity)}
+                                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                 Add to cart
+                            </button>
+                            <button
+
+                                // onClick={() => handleViewProduct(datas._id) }
+
+                                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                View
                             </button>
                         </div>
                     </div>

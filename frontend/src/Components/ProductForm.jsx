@@ -121,7 +121,7 @@ export const ProductForm = () => {
             }
 
             // Send the form data to the backend
-            const response = await axios.post("http://localhost:8000/api/products", form, {
+            const response = await axios.post("http://localhost:8000/api/product", form, {
                 headers: {
                     "Content-Type": "multipart/form-data"
                 },

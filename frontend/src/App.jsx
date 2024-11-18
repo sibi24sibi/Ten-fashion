@@ -19,11 +19,11 @@ function App() {
 
   const [products, setProducts] = useState([]);
 
-  useEffect(() => {
-    axios.get('http://localhost:8000/api/products')
-      .then((response) => setProducts(response.data))
-      .catch((error) => console.error('Error fetching products:', error));
-  }, [products]);
+  // useEffect(() => {
+  //   axios.get('http://localhost:8000/api/products')
+  //     .then((response) => setProducts(response.data))
+  //     .catch((error) => console.error('Error fetching products:', error));
+  // }, [products]);
 
 
 
@@ -31,8 +31,10 @@ function App() {
   return (
     <div className="dark:bg-gray-700 h-screen flex flex-col">
       <Navbar />
-      <div className="flex flex-grow items-center justify-center p-4">
-        <div className="w-full max-w-4xl text-center px-4 md:px-0">
+
+      <div className="flex flex-grow items-center h-screen justify-center p-4">
+
+        {/* <div className="w-full max-w-4xl text-center px-4 md:px-0">
           <span className="text-2xl text-gray-800 dark:text-white font-semibold">
             {isSignup ? "Sign Up" : "Login"}
           </span>
@@ -51,12 +53,15 @@ function App() {
             </span>
           </div>
         </div>
+ */}
 
-
-      <ContactForm/>
+      {/* <ContactForm/> */}
 
       </div>
 
+      {/* <ProductCard datas={products} /> */}
+      {/* <ProductCard data={products} /> */}
+      {/* <Shopping_Cart /> */}
       <Footer />
     </div>
   );

@@ -1,25 +1,32 @@
 const Product = require("../models/product");
 
-// Create a new product
 const createProduct = async (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).json({ error: "Image upload failed" });
     }
 
-    const products = Array.isArray(req.body) ? req.body : [req.body];
-
-    const productsWithImage = products.map((product) => ({
-      ...product,
+    const productWithImage = {
+      ...req.body,
       images: req.file.path,
-    }));
+    };
 
-    const createdProducts = await Product.insertMany(productsWithImage);
+    const createdProduct = await Product.create(productWithImage);
 
-    res.status(201).json(createdProducts);
+    res.status(201).json(createdProduct);
   } catch (error) {
-    console.error(error);
     res.status(500).json({ message: "Error saving product", error });
+  }
+};
+
+const getProductinfo = async (req, res) => {
+  try {
+    const productId = req.params.id;
+    const product = await Product.findById(productId);
+    if (!product) return res.status(404).json({ message: "Product not found" });
+    res.json(product);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching product", error });
   }
 };
 
@@ -33,4 +40,4 @@ const getProducts = async (req, res) => {
   }
 };
 
-module.exports = { createProduct, getProducts };
+module.exports = { createProduct, getProducts, getProductinfo };
