@@ -9,6 +9,9 @@ export default {
       colors: {
         "primary-dark-bg": "#18191a",
       },
+      screens: {
+        xs: "480px",
+      },
     },
   },
   plugins: [flowbite.plugin()],
