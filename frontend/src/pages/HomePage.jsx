@@ -5,6 +5,7 @@ import { ProductCard } from '../Components/ProductCard';
 export const HomePage = () => {
 
     const [products, setProducts] = useState([]);
+    console.log(products)
 
 
     useEffect(() => {

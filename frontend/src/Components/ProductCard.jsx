@@ -1,8 +1,7 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const ProductCard = ({ data }) => {
-
 
 
     // const handleViewProduct = (productId) => {
@@ -12,9 +11,9 @@ export const ProductCard = ({ data }) => {
     const [quantity] = useState(1);
 
 
-    const handleAddToCart = async (productId, quantity) => {
+    const handleAddToCart = async (productId, quantity, productTitle, price, images) => {
         try {
-            const response = await axios.post('http://localhost:8000/cartItem', { productId, quantity })
+            const response = await axios.post('http://localhost:8000/cartItem', { productId, quantity, productTitle, price, images })
 
             console.log('Added product to cart:', response.data);
         }
@@ -72,7 +71,7 @@ export const ProductCard = ({ data }) => {
                                 ${datas.price}
                             </span>
                             <button
-                                onClick={() => handleAddToCart(datas._id, quantity)}
+                                onClick={() => handleAddToCart(datas._id, quantity, datas.productTitle, datas.price, datas.images )}
                                 className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                 Add to cart
                             </button>
