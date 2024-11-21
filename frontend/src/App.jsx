@@ -11,6 +11,7 @@ import { Shopping_Cart } from "./components/Shopping-Cart/Shopping_Cart";
 import ContactForm from "./pages/ContactPage";
 import ProductDetails from "./Components/ProductDetails";
 import { HomePage } from "./pages/HomePage";
+import SearchedProducts from "./Components/SearchedProducts";
 
 function App() {
   const [isSignup, setIsSignup] = useState(false);
@@ -27,10 +28,14 @@ function App() {
       <div className="flex flex-grow items-center justify-center p-4">
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/signup" element={<SignupForm toggleForm={toggleForm} />} />
+          <Route
+            path="/signup"
+            element={<SignupForm toggleForm={toggleForm} />}
+          />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/contact-us" element={<ContactForm />} />
           <Route path="/product/:id" element={<ProductDetails />} />
+          <Route path="/searched-products" element={<SearchedProducts />} />
           <Route path="/cart" element={<Shopping_Cart />} />
           <Route path="/admin/products/new" element={<ProductForm />} />
           <Route path="*" element={<h1>Page not found</h1>} />
