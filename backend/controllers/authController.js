@@ -1,8 +1,6 @@
 const User = require("../models/User")
 const jwt = require("jsonwebtoken")
 const bcryptjs = require("bcryptjs")
-// import bcryptjs from "bcryptjs"
-// import jwt from "jsonwebtoken"
 
 const signup = async (req, res) => {
   try {
