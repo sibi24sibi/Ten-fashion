@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import HeroImage from "../assets/images/productDetails/product_details_hero.jpg";
 import StrawberryShort1 from "../assets/images/productDetails/Strawberry_short1.jpg";
 import StrawberryShort2 from "../assets/images/productDetails/Strawberry_short2.jpg";
@@ -9,11 +9,31 @@ import StrawberryShort6 from "../assets/images/productDetails/Strawberry_short6.
 import Facebook from "../assets/images/productDetails/Facebook.png";
 import Linkedin from "../assets/images/productDetails/Linkedin.webp";
 
+import axios from 'axios';
+import {Link, useParams} from 'react-router-dom';
+import { handleAddToCart } from "../../utils/utils";
+
 function ProductDetails() {
-  const [count, setCount] = useState(1);
   const [selectedImage, setSelectedImage] = useState(StrawberryShort1);
   const [activeTab, setActiveTab] = useState("Description");
   const [isHeartFilled, setIsHeartFilled] = useState(false);
+
+  const [prodId, setProdId] = useState(null);
+  const [productData, setProductData] = useState([]);
+  const [quantity, setQuantity] = useState(1)
+
+  const data = productData.filter(data => data._id === prodId)
+  console.log(data[0])
+
+  const {id} = useParams();
+
+  useEffect(() => {
+    if (id) {
+      setProdId(id)
+    }
+  },[id])
+
+  console.log(prodId)
 
   const toggleHeart = () => {
     setIsHeartFilled(!isHeartFilled);
@@ -27,6 +47,21 @@ function ProductDetails() {
     StrawberryShort5,
     StrawberryShort6,
   ];
+
+  useEffect(() => {
+
+    const fetchData = async () => {
+        try {
+          const response = await axios.get('http://localhost:8000/api/products');
+          setProductData(response.data)
+        } catch (error) {
+          console.error('No product available to show',error)
+        }  
+    }
+
+    return () => fetchData();
+
+  },[])
 
   return (
     <div className="w-full h-[auto]">
@@ -60,8 +95,8 @@ function ProductDetails() {
         {/* Display Selected Image */}
         <div className="w-[45%] max-md:w-[80%]">
           <img
-            className="w-[100%] h-[90%]"
-            src={selectedImage}
+            className="w-[100%] h-[90%] object-contain"
+            src={data[0]?.images}
             alt="Selected Strawberry Short"
           />
         </div>
@@ -80,23 +115,23 @@ function ProductDetails() {
             </div>
           </div>
 
-          <h1 className="mt-8 text-4xl font-medium max-md:mt-4">₹850.00</h1>
+          <h1 className="mt-8 text-4xl font-medium max-md:mt-4">₹{data[0]?.price}</h1>
 
           <div className="mt-16 flex justify-between max-xl:flex-wrap max-md:mt-8 max-md:gap-4">
             <div className="w-[25%] flex justify-center border border-gray-300 items-center rounded-3xl max-md:w-[100%]">
               <button
                 className="py-2"
-                onClick={() => setCount(count > 1 ? count - 1 : 1)}
+                onClick={() => setQuantity(quantity > 1 ? quantity - 1 : 1)}
               >
                 -
               </button>
-              <h1 className="px-4">{count}</h1>
-              <button className="py-2" onClick={() => setCount(count + 1)}>
+              <h1 className="px-4">{quantity}</h1>
+              <button className="py-2" onClick={() => setQuantity(quantity + 1)}>
                 +
               </button>
             </div>
 
-            <button className="w-[70%] flex justify-center bg-black text-white font-bold border border-black py-2 rounded-3xl hover:bg-white hover:text-black max-md:w-[100%]">
+            <button className="w-[70%] flex justify-center bg-black text-white font-bold border border-black py-2 rounded-3xl hover:bg-white hover:text-black max-md:w-[100%]" onClick={() => handleAddToCart(data[0]?._id, quantity, data[0]?.productTitle, data[0]?.price, data[0]?.images)}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6 mr-2"
@@ -115,9 +150,11 @@ function ProductDetails() {
             </button>
           </div>
 
+          <Link to='/cart'>
           <button className="w-[100%] mt-10 py-2 font-bold border border-black rounded-3xl hover:bg-black hover:text-white max-md:mt-5">
-            Buy it now
+              Buy it now
           </button>
+          </Link>
 
           <div className="mt-10 flex items-center max-md:mt-5 max-md:flex-col max-md:items-start">
             <h1

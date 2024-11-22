@@ -12,6 +12,8 @@ import ContactForm from "./pages/ContactPage";
 import ProductDetails from "./Components/ProductDetails";
 import { HomePage } from "./pages/HomePage";
 import SearchedProducts from "./Components/SearchedProducts";
+import {ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const [isSignup, setIsSignup] = useState(false);
@@ -43,6 +45,7 @@ function App() {
       </div>
 
       <Footer />
+      <ToastContainer />
     </div>
   );
 }
