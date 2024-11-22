@@ -1,15 +1,38 @@
-import { Button, Checkbox, Label, TextInput } from "flowbite-react";
-import { useState } from "react";
+import { Button, Checkbox, Label, TextInput } from "flowbite-react"
+import { useState } from "react"
+import toast from "react-hot-toast"
+import { json, useNavigate } from "react-router-dom"
 
 function LoginForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [remember, setRemember] = useState(false);
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [remember, setRemember] = useState(false)
+  const navigate = useNavigate()
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      const responce = await fetch("http://localhost:8000/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      })
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Logging in with:", { email, password, remember });
-  };
+      if (!responce.ok) {
+        throw new Error("failed to sign in User")
+      }
+      const data = await responce.json()
+      if (data.success === false) {
+        return toast.error(data.message)
+      }
+      toast.success(data.message)
+      navigate("/")
+    } catch (error) {
+      throw new Error(error)
+    }
+    console.log("Logging in with:", { email, password, remember })
+  }
 
   return (
     <form className="flex max-w-md flex-col gap-4" onSubmit={handleSubmit}>
@@ -64,7 +87,7 @@ function LoginForm() {
       {/* Submit Button */}
       <Button type="submit">Submit</Button>
     </form>
-  );
+  )
 }
 
-export default LoginForm;
+export default LoginForm

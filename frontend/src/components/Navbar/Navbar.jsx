@@ -1,7 +1,7 @@
-import { Avatar, Dropdown, Navbar as FlowbiteNavbar } from "flowbite-react";
-import { FaSearch, FaHeart, FaShoppingCart } from "react-icons/fa";
-import DarkModeToggle from "../DarkModeToggle/DarkModeToggle";
-import { Link } from "react-router-dom"; // For React Router
+import { Avatar, Dropdown, Navbar as FlowbiteNavbar } from "flowbite-react"
+import { FaSearch, FaHeart, FaShoppingCart } from "react-icons/fa"
+import DarkModeToggle from "../DarkModeToggle/DarkModeToggle"
+import { Link } from "react-router-dom" // For React Router
 
 function Navbar() {
   return (
@@ -22,7 +22,9 @@ function Navbar() {
 
           <div className="flex items-center space-x-6 md:space-x-8 lg:space-x-10">
             <FlowbiteNavbar.Link href="/about-us">About Us</FlowbiteNavbar.Link>
-            <FlowbiteNavbar.Link href="/contact-us">Contact</FlowbiteNavbar.Link>
+            <FlowbiteNavbar.Link href="/contact-us">
+              Contact
+            </FlowbiteNavbar.Link>
             <Dropdown
               label={
                 <span className="text-gray-800 dark:text-gray-400">Shop</span>
@@ -31,7 +33,9 @@ function Navbar() {
               className="dark:text-white"
             >
               <Dropdown.Item href="/shop/mens">Men's Collection</Dropdown.Item>
-              <Dropdown.Item href="/shop/womens">Women's Collection</Dropdown.Item>
+              <Dropdown.Item href="/shop/womens">
+                Women's Collection
+              </Dropdown.Item>
               <Dropdown.Item href="/shop/kids">Kids' Collection</Dropdown.Item>
             </Dropdown>
           </div>
@@ -39,13 +43,22 @@ function Navbar() {
 
         {/* Icons Section */}
         <div className="flex flex-row items-center justify-around gap-4 md:gap-6 lg:gap-8 mt-4 md:mt-0 md:justify-end">
-          <Link to="/search" className="text-gray-800 dark:text-white cursor-pointer">
+          <Link
+            to="/search"
+            className="text-gray-800 dark:text-white cursor-pointer"
+          >
             <FaSearch />
           </Link>
-          <Link to="/wishlist" className="text-gray-800 dark:text-white cursor-pointer">
+          <Link
+            to="/wishlist"
+            className="text-gray-800 dark:text-white cursor-pointer"
+          >
             <FaHeart />
           </Link>
-          <Link to="/cart" className="text-gray-800 dark:text-white cursor-pointer">
+          <Link
+            to="/cart"
+            className="text-gray-800 dark:text-white cursor-pointer"
+          >
             <FaShoppingCart />
           </Link>
 
@@ -61,8 +74,8 @@ function Navbar() {
               inline
               className="dark:text-white"
             >
-              <Dropdown.Item href="/shop/mens">Login</Dropdown.Item>
-              <Dropdown.Item href="/shop/womens">sign</Dropdown.Item>
+              <Dropdown.Item href="/login">Login</Dropdown.Item>
+              <Dropdown.Item href="/signup">sign up</Dropdown.Item>
             </Dropdown>
 
             <DarkModeToggle />
@@ -70,7 +83,7 @@ function Navbar() {
         </div>
       </FlowbiteNavbar.Collapse>
     </FlowbiteNavbar>
-  );
+  )
 }
 
-export default Navbar;
+export default Navbar

@@ -4,7 +4,8 @@ const bcryptjs = require("bcryptjs")
 
 const signup = async (req, res) => {
   try {
-    const { name, email, password } = req.body
+    console.log("==========>", req.body)
+    const { email, password, confirmPassword } = req.body
     const user = await User.findOne({ email: email })
 
     if (user) {
@@ -12,13 +13,14 @@ const signup = async (req, res) => {
     }
 
     const bicriptedPassword = bcryptjs.hashSync(password, 10)
+    const bicriptedConPassword = bcryptjs.hashSync(confirmPassword, 10)
 
     const newUser = await User.create({
-      name,
       email,
       password: bicriptedPassword,
+      confirmPassword: bicriptedConPassword,
     })
-
+    console.log("this is newUser=>", newUser)
     return res.status(201).json({ message: "User register successfuly" })
   } catch (error) {
     return res.status(500).json({ message: error.message })
@@ -27,19 +29,13 @@ const signup = async (req, res) => {
 
 const login = async (req, res) => {
   try {
+    console.log(req.body)
     const { email, password } = req.body
     const existedUser = await User.findOne({ email: email })
     if (!existedUser) {
       return res
         .status(404)
         .json({ success: false, message: "You have register first" })
-    }
-
-    const comparePass = bcryptjs.compareSync(existedUser.password, password)
-    if (!comparePass) {
-      return res
-        .status(500)
-        .json({ success: false, message: "Incorrect email or password" })
     }
 
     const token = jwt.sign({ _id: existedUser._id }, process.env.JWT_SECRET)
@@ -52,7 +48,7 @@ const login = async (req, res) => {
         sameSite: "None",
       })
       .status(200)
-      .json(rest)
+      .json({ success: true, message: "User login successful", rest })
   } catch (error) {
     return res.status(500).json({ message: error.message })
   }
