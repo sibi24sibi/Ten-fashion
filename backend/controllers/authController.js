@@ -4,7 +4,6 @@ const bcryptjs = require("bcryptjs")
 
 const signup = async (req, res) => {
   try {
-    console.log("==========>", req.body)
     const { email, password, confirmPassword } = req.body
     const user = await User.findOne({ email: email })
 
@@ -20,7 +19,6 @@ const signup = async (req, res) => {
       password: bicriptedPassword,
       confirmPassword: bicriptedConPassword,
     })
-    console.log("this is newUser=>", newUser)
     return res.status(201).json({ message: "User register successfuly" })
   } catch (error) {
     return res.status(500).json({ message: error.message })
