@@ -8,10 +8,11 @@ import LoginForm from "./components/LoginForm/LoginForm";
 import { ProductCard } from "./Components/ProductCard";
 import { ProductForm } from "./Components/ProductForm";
 import { Shopping_Cart } from "./components/Shopping-Cart/Shopping_Cart";
-import ContactForm from "./pages/ContactPage";
+import ContactPage from "./pages/ContactPage";
 import ProductDetails from "./Components/ProductDetails";
 import { HomePage } from "./pages/HomePage";
 import SearchedProducts from "./Components/SearchedProducts";
+import AboutPage from "./pages/AboutPage";
 
 function App() {
   const [isSignup, setIsSignup] = useState(false);
@@ -33,11 +34,12 @@ function App() {
             element={<SignupForm toggleForm={toggleForm} />}
           />
           <Route path="/login" element={<LoginForm />} />
-          <Route path="/contact-us" element={<ContactForm />} />
+          <Route path="/contact-us" element={<ContactPage />} />
           <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/searched-products" element={<SearchedProducts />} />
           <Route path="/cart" element={<Shopping_Cart />} />
           <Route path="/admin/products/new" element={<ProductForm />} />
+          <Route path="/about-us" element={<AboutPage />} />
           <Route path="*" element={<h1>Page not found</h1>} />
         </Routes>
       </div>
