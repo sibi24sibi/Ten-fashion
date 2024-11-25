@@ -1,24 +1,27 @@
-import { useState } from "react";
-import { Routes, Route } from "react-router-dom";
-import "./App.css";
-import Navbar from "../src/components/Navbar/Navbar";
-import Footer from "../src/components/Footer/Footer";
-import SignupForm from "./components/SignupForm/SignupForm";
-import LoginForm from "./components/LoginForm/LoginForm";
-import { ProductCard } from "./Components/ProductCard";
-import { ProductForm } from "./Components/ProductForm";
-import { Shopping_Cart } from "./components/Shopping-Cart/Shopping_Cart";
-import ContactForm from "./pages/ContactPage";
-import ProductDetails from "./Components/ProductDetails";
-import { HomePage } from "./pages/HomePage";
-import SearchedProducts from "./Components/SearchedProducts";
+import { useState } from "react"
+import { Routes, Route } from "react-router-dom"
+import "./App.css"
+import Navbar from "../src/components/Navbar/Navbar"
+import Footer from "../src/components/Footer/Footer"
+import SignupForm from "./components/SignupForm/SignupForm"
+import LoginForm from "./components/LoginForm/LoginForm"
+import { ProductCard } from "./Components/ProductCard"
+import { ProductForm } from "./Components/ProductForm"
+import { Shopping_Cart } from "./components/Shopping-Cart/Shopping_Cart"
+import ContactForm from "./pages/ContactPage"
+import ProductDetails from "./Components/ProductDetails"
+import { HomePage } from "./pages/HomePage"
+import SearchedProducts from "./Components/SearchedProducts"
+import ProtectRoute from "./Auth/ProtectRoute"
 
 function App() {
-  const [isSignup, setIsSignup] = useState(false);
+  const [isSignup, setIsSignup] = useState(false)
 
   const toggleForm = () => {
-    setIsSignup(!isSignup);
-  };
+    setIsSignup(!isSignup)
+  }
+
+
 
   return (
     <div className="dark:bg-gray-700 h-screen flex flex-col">
@@ -33,10 +36,12 @@ function App() {
             element={<SignupForm toggleForm={toggleForm} />}
           />
           <Route path="/login" element={<LoginForm />} />
-          <Route path="/contact-us" element={<ContactForm />} />
-          <Route path="/product/:id" element={<ProductDetails />} />
-          <Route path="/searched-products" element={<SearchedProducts />} />
-          <Route path="/cart" element={<Shopping_Cart />} />
+          <Route element={<ProtectRoute />}>
+            <Route path="/contact-us" element={<ContactForm />} />
+            <Route path="/product/:id" element={<ProductDetails />} />
+            <Route path="/searched-products" element={<SearchedProducts />} />
+            <Route path="/cart" element={<Shopping_Cart />} />
+          </Route>
           <Route path="/admin/products/new" element={<ProductForm />} />
           <Route path="*" element={<h1>Page not found</h1>} />
         </Routes>
@@ -44,7 +49,7 @@ function App() {
 
       <Footer />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

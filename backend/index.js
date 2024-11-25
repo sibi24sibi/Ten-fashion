@@ -15,8 +15,13 @@ const CONNECTION_URL =
   process.env.CONNECTION_URL || "mongodb://localhost:27017/tenFashion"
 
 // Middleware
-app.use(cors())
-app.use(express.json())
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+)
+app.use(express.json()) 
 
 app.use(cookieParser())
 
