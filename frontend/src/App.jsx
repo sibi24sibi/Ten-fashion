@@ -12,6 +12,9 @@ import ContactForm from "./pages/ContactPage";
 import ProductDetails from "./Components/ProductDetails";
 import { HomePage } from "./pages/HomePage";
 import SearchedProducts from "./Components/SearchedProducts";
+import AdminDashboard from "./Components/Admin/AdminDashboard";
+import ProductList from "./Components/Admin/Product/ProductList";
+import OrderList from "./Components/Admin/Order/OrderList";
 
 function App() {
   const [isSignup, setIsSignup] = useState(false);
@@ -38,6 +41,9 @@ function App() {
           <Route path="/searched-products" element={<SearchedProducts />} />
           <Route path="/cart" element={<Shopping_Cart />} />
           <Route path="/admin/products/new" element={<ProductForm />} />
+          <Route path="/admin-dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/products" element={<ProductList />} />
+          <Route path="/admin/orders" element={<OrderList />} />
           <Route path="*" element={<h1>Page not found</h1>} />
         </Routes>
       </div>
