@@ -4,8 +4,12 @@ const {
   createProduct,
   getProducts,
   getProductinfo,
-} = require("../controllers/productContrroller.js");
-const { addToCart, getCart, deleteFromCart } = require("../controllers/cartController.js");
+} = require("../controllers/productController.js");
+const {
+  addToCart,
+  getCart,
+  deleteFromCart,
+} = require("../controllers/cartController.js");
 
 const router = express.Router();
 

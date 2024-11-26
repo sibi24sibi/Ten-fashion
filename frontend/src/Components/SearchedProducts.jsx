@@ -107,8 +107,8 @@ function SearchedProducts() {
       </div>
 
       {/* Additional Feature Section */}
-      <div className="w-[80%] flex justify-between m-auto my-8 max-2xl:w-[90%]">
-        <div className="flex gap-4">
+      <div className="w-[80%] flex justify-between m-auto my-8 max-2xl:w-[90%] max-md:flex-col">
+        <div className="flex gap-4 max-md:py-2 max-sm:flex-col">
           <h1
             className="font-semibold flex items-center gap-2 cursor-pointer"
             onClick={toggleSidebar}
@@ -117,7 +117,7 @@ function SearchedProducts() {
             Filter
           </h1>
 
-          <div className="flex gap-4 h-5 my-auto">
+          <div className="flex gap-4 h-5 my-auto max-sm:w-5">
             <img
               src={filterIcon1}
               alt="Filter Icon"
@@ -186,7 +186,7 @@ function SearchedProducts() {
       {isSidebarOpen && (
         <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex">
           {/* Sidebar on the right */}
-          <div className="w-[15%] bg-white dark:bg-gray-800 h-full p-4 shadow-lg">
+          <div className="w-[15%] bg-white dark:bg-gray-800 h-full p-4 shadow-lg max-lg:w-[20%] max-md:w-[30%] max-sm:w-[50%]">
             <button
               onClick={toggleSidebar}
               className="my-4 text-gray-600 dark:text-white hover:text-gray-900 dark:hover:text-white"
@@ -218,7 +218,7 @@ function SearchedProducts() {
       )}
 
       {/* Products Section */}
-      <div className="w-[80%] flex flex-wrap gap-6 justify-start m-auto max-2xl:w-[90%] max-lg:w-[95%]">
+      <div className="w-[80%] flex flex-wrap gap-5 justify-start m-auto max-2xl:w-[90%] max-lg:w-[95%] max-lg:gap-x-4 max-md:w-[98%] max-md:gap-x-2">
         {products.map((data) => (
           <div key={data.id} style={{ flexBasis }}>
             <img className="w-full" src={data.image} alt={data.name} />
