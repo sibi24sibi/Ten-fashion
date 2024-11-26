@@ -8,7 +8,7 @@ import LoginForm from "./components/LoginForm/LoginForm";
 import { ProductCard } from "./Components/ProductCard";
 import { ProductForm } from "./Components/ProductForm";
 import { Shopping_Cart } from "./components/Shopping-Cart/Shopping_Cart";
-import ContactForm from "./pages/ContactPage";
+import ContactPage from "./pages/ContactPage";
 import ProductDetails from "./Components/ProductDetails";
 import { HomePage } from "./pages/HomePage";
 import SearchedProducts from "./Components/SearchedProducts";
@@ -37,7 +37,7 @@ function App() {
             element={<SignupForm toggleForm={toggleForm} />}
           />
           <Route path="/login" element={<LoginForm />} />
-          <Route path="/contact-us" element={<ContactForm />} />
+          <Route path="/contact-us" element={<ContactPage />} />
           <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/searched-products" element={<SearchedProducts />} />
           <Route path="/cart" element={<Shopping_Cart />} />
