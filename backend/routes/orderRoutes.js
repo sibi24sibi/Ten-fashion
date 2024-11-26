@@ -5,7 +5,7 @@ const {
   getUserOrders,
   updateOrderStatus,
 } = require("../controllers/orderController");
-const authMiddleware = require("../middlewares/authMiddleware");
+const authMiddleware = require("../middleware/authmiddleware");
 
 // Order Routes
 router.post("/", authMiddleware, createOrder); // Create a new order
