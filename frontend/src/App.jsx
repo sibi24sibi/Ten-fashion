@@ -16,6 +16,8 @@ import AdminDashboard from "./Components/Admin/AdminDashboard";
 import ProductList from "./Components/Admin/Product/ProductList";
 import OrderList from "./Components/Admin/Order/OrderList";
 import AboutPage from "./pages/AboutPage";
+import {ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const [isSignup, setIsSignup] = useState(false);
@@ -51,6 +53,7 @@ function App() {
       </div>
 
       <Footer />
+      <ToastContainer />
     </div>
   );
 }
