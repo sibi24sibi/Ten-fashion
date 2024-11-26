@@ -15,6 +15,7 @@ import SearchedProducts from "./Components/SearchedProducts";
 import AdminDashboard from "./Components/Admin/AdminDashboard";
 import ProductList from "./Components/Admin/Product/ProductList";
 import OrderList from "./Components/Admin/Order/OrderList";
+import AboutPage from "./pages/AboutPage";
 
 function App() {
   const [isSignup, setIsSignup] = useState(false);
@@ -44,6 +45,7 @@ function App() {
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
           <Route path="/admin/products" element={<ProductList />} />
           <Route path="/admin/orders" element={<OrderList />} />
+          <Route path="/about-us" element={<AboutPage />} />
           <Route path="*" element={<h1>Page not found</h1>} />
         </Routes>
       </div>
