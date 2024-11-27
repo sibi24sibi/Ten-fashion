@@ -10,11 +10,12 @@ const addToCart = async (req, res) => {
       return res.status(404).json({ message: "Product not found" });
     }
 
-    let cart = await Cart.findOne();
+    let cart = await Cart.findOne({ userId: req.user._id });
 
     if (!cart) {
       // If no cart exists, create a new one
       cart = new Cart({
+        userId: req.user._id,
         products: [{ productId, quantity, productTitle, price, images }],
       });
     } else {
@@ -44,7 +45,7 @@ const addToCart = async (req, res) => {
 const getCart = async (req, res) => {
   try {
     // Find the cart and populate the product information
-    const cart = await Cart.find();
+    const cart = await Cart.find({ userId: req.user._id });
 
     res.status(200).json(cart);
   } catch (error) {
@@ -58,7 +59,7 @@ const deleteFromCart = async (req, res) => {
     const { productId } = req.body; // Extract productId from the request body
 
     // Find the cart
-    let cart = await Cart.findOne();
+    let cart = await Cart.findOne({ userId: req.user._id });
     if (!cart) {
       return res.status(404).json({ message: "Cart not found" });
     }

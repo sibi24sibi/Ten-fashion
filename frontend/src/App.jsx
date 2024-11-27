@@ -18,6 +18,9 @@ import OrderList from "./Components/Admin/Order/OrderList";
 import AboutPage from "./pages/AboutPage";
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Womens } from "./Components/Category/Womens";
+import { Mens } from "./Components/Category/Mens";
+import { Kids } from "./Components/Category/Kids";
 
 function App() {
   const [isSignup, setIsSignup] = useState(false);
@@ -48,6 +51,9 @@ function App() {
           <Route path="/admin/products" element={<ProductList />} />
           <Route path="/admin/orders" element={<OrderList />} />
           <Route path="/about-us" element={<AboutPage />} />
+          <Route path="/shop/womens" element={<Womens />} />
+          <Route path="/shop/mens" element={<Mens />} />
+          <Route path="/shop/kids" element={<Kids />} />
           <Route path="*" element={<h1>Page not found</h1>} />
         </Routes>
       </div>
