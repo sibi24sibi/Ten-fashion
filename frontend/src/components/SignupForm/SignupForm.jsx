@@ -20,7 +20,7 @@ function SignupForm() {
   }
 
   return (
-    <form className="flex max-w-md flex-col gap-4" onSubmit={handleSubmit}>
+    <form className="flex max-w-md flex-col gap-4 my-[3%]" onSubmit={handleSubmit}>
       {/* Email Field */}
       <div className="flex items-center gap-2">
         <label

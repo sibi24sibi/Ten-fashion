@@ -35,11 +35,11 @@ export const Kids = () => {
         <>
         {
             filteredData.length !== 0 ? (
-                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10'>
+                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 my-10'>
                 {
                     filteredData.map((data, index) => (
                         <div key={index} className='h-auto w-auto border-[1px] flex flex-col items-center rounded-lg'>
-                            <img src={data.images} onClick={() => handleViewProduct(data._id)} className='h-[20rem] w-64 object-cover rounded-t-lg mb-2 hover:opacity-80 cursor-pointer' />
+                            <img src={data.images} onClick={() => handleViewProduct(data._id)} className='h-[24rem] w-72 object-cover rounded-t-lg mb-2 hover:opacity-80 cursor-pointer' />
                             <div className='text-xl font-medium'>{data.productTitle}</div>
                             <div className='flex items-center gap-[2.5rem] my-2'>
                                 <div className='text-xl font-medium'>Rs. {data.price}</div>

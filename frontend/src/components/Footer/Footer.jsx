@@ -4,7 +4,7 @@ import { BsFacebook, BsGithub, BsInstagram, BsTwitter } from "react-icons/bs";
 function Footer() {
   return (
     <FlowbiteFooter container>
-      <div className="w-full">
+      <div className="w-full relative bottom-0">
         <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-3 gap-8">
           <div className="flex justify-center sm:justify-start">
             <span className="text-2xl sm:text-sm md:text-xl xl:text-3xl text-gray-900 dark:text-white">

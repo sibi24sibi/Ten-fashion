@@ -30,11 +30,11 @@ function App() {
   };
 
   return (
-    <div className="dark:bg-gray-700 h-screen flex flex-col">
+    <div className="dark:bg-gray-700 h-auto flex flex-col">
       <Navbar />
 
       {/* Main Content */}
-      <div className="flex flex-grow items-center justify-center p-4">
+      <div className="flex flex-grow items-center justify-center">
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route

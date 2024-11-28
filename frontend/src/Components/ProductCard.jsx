@@ -8,6 +8,7 @@ export const ProductCard = ({ data }) => {
 
     const handleViewProduct = (productId) => {
         navigate(`/product/${productId}`);
+        window.scrollTo(0, 0);
     };
 
     const [quantity] = useState(1);
@@ -26,7 +27,7 @@ export const ProductCard = ({ data }) => {
     // }
 
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 py-5">
             {data.map((datas, index) => (
                 <div
                     key={datas._id || index}
@@ -34,7 +35,7 @@ export const ProductCard = ({ data }) => {
                 >
                     <a href="#">
                         <img
-                            className="p-8 rounded-t-lg"
+                            className="p-8 rounded-t-lg h-[30rem] w-96 object-cover"
                             src={datas.images || 'https://placehold.co/600x400'}
                             alt={`${datas.productTitle} image`}
                         />
@@ -70,8 +71,9 @@ export const ProductCard = ({ data }) => {
 
                         <div className="flex items-center justify-between">
                             <span className="text-3xl font-bold text-gray-900 dark:text-white">
-                                ${datas.price}
+                            ₹{datas.price}
                             </span>
+                            <div className="flex gap-4">
                             <button
                                 onClick={() => handleAddToCart(datas._id, quantity, datas.productTitle, datas.price, datas.images )}
                                 className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
@@ -84,6 +86,7 @@ export const ProductCard = ({ data }) => {
                                 className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                 View
                             </button>
+                            </div>
                         </div>
                     </div>
                 </div>

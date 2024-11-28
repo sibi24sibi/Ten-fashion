@@ -96,8 +96,8 @@ function Navbar() {
                 inline
                 className="dark:text-white"
               >
-                <Dropdown.Item href="/shop/mens">Login</Dropdown.Item>
-                <Dropdown.Item href="/shop/womens">Sign Up</Dropdown.Item>
+                <Dropdown.Item href="/login">Login</Dropdown.Item>
+                <Dropdown.Item href="/signup">Sign Up</Dropdown.Item>
               </Dropdown>
 
               <DarkModeToggle />
