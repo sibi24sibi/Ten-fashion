@@ -63,16 +63,14 @@ function ProductDetails() {
   return (
     <div className="w-full h-[auto]">
       {/* Main Header Section */}
-      {/* <div
+      <div
         className="w-full h-[180px] bg-center bg-cover flex items-center justify-center md:items-center text-center"
         style={{
           backgroundImage: `url(${HeroImage})`,
         }}
       >
-        <h1 className="w-auto text-white">
-          Home &gt; Women &gt; Shorts &gt; Strawberry loose wide-leg jeans women
-        </h1>
-      </div> */}
+        <h1 className="w-auto text-white text-2xl font-bold">TEN - Fashion</h1>
+      </div>
 
       {/* About Product Details Section */}
       <div className="w-[80%] mx-auto py-10 flex justify-between max-xl:w-[95%] max-md:flex-wrap">
