@@ -1,18 +1,23 @@
 import { Button, Checkbox, Label, TextInput } from "flowbite-react"
 import { useState } from "react"
 import toast from "react-hot-toast"
-import { json, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
+import { useUserContext } from "../../context/useContext.jsx"
 
 function LoginForm() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [remember, setRemember] = useState(false)
   const navigate = useNavigate()
+  const { setCurrentUser, loading, setLoading, error, setError } =
+    useUserContext()
   const handleSubmit = async (e) => {
     e.preventDefault()
+    setLoading(true)
     try {
       const responce = await fetch("http://localhost:8000/api/auth/login", {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -23,15 +28,20 @@ function LoginForm() {
         throw new Error("failed to sign in User")
       }
       const data = await responce.json()
+      console.log(data)
       if (data.success === false) {
+        setError(data.message)
+        setLoading(false)
         return toast.error(data.message)
       }
+      setLoading(false)
+      setCurrentUser(data.rest)
+      setError(null)
       toast.success(data.message)
       navigate("/")
     } catch (error) {
       throw new Error(error)
     }
-    console.log("Logging in with:", { email, password, remember })
   }
 
   return (

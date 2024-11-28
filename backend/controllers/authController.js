@@ -5,15 +5,16 @@ const bcryptjs = require("bcryptjs")
 const signup = async (req, res) => {
   try {
     const { email, password, confirmPassword } = req.body
-    const user = await User.findOne({ email: email })
 
+    const user = await User.findOne({ email: email })
+  
     if (user) {
       return res.status(400).json({ message: "User already exist" })
     }
 
     const bicriptedPassword = bcryptjs.hashSync(password, 10)
-    const bicriptedConPassword = bcryptjs.hashSync(confirmPassword, 10)
 
+    const bicriptedConPassword = bcryptjs.hashSync(confirmPassword, 10)
     const newUser = await User.create({
       email,
       password: bicriptedPassword,
@@ -21,7 +22,7 @@ const signup = async (req, res) => {
     })
     return res.status(201).json({ message: "User register successfuly" })
   } catch (error) {
-    return res.status(500).json({ message: error.message })
+    return res.status(500).json({ message: error.message})
   }
 }
 
@@ -37,13 +38,15 @@ const login = async (req, res) => {
     }
 
     const token = jwt.sign({ _id: existedUser._id }, process.env.JWT_SECRET)
+
+    console.log(token)
     const { password: pass, ...rest } = existedUser._doc
     return res
       .cookie("token", token, {
         httpOnly: true,
         maxAge: 24 * 60 * 60 * 1000,
         secure: true,
-        sameSite: "None",
+        sameSite: "none",
       })
       .status(200)
       .json({ success: true, message: "User login successful", rest })
