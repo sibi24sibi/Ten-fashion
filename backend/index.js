@@ -1,10 +1,11 @@
-const express = require("express")
-const cors = require("cors")
-const dotenv = require("dotenv")
-const connectDB = require("./config/db.js")
-const productRoutes = require("./routes/productRoutes.js")
-const contactRoute = require("./routes/ContactRoute.js")
-const authRoutes = require("./routes/authRoutes.js")
+const express = require("express");
+const cors = require("cors");
+const dotenv = require("dotenv");
+const connectDB = require("./config/db.js");
+const productRoutes = require("./routes/productRoutes.js");
+const contactRoute = require("./routes/ContactRoute.js");
+const authRoutes = require("./routes/authRoutes.js");
+const orderRoutes = require("./routes/orderRoutes.js");
 const cookieParser = require("cookie-parser")
 // Load environment variables
 dotenv.config({ path: "../.env" })
@@ -32,6 +33,7 @@ connectDB(CONNECTION_URL)
 app.use("/", productRoutes)
 app.use("/", contactRoute)
 app.use("/api/auth", authRoutes)
+app.use("/api/orders", orderRoutes);
 
 // Start the server
 app.listen(PORT, () => {

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { toast } from 'react-toastify';
 
 export const Shopping_Cart = () => {
 
@@ -34,8 +35,10 @@ export const Shopping_Cart = () => {
                 data : { productId: id },
             });
             setCartItems(cartItems.filter(item => item.productId !== id));
+            toast.success('product removed from cart');
         } catch (error) {
             console.error("Error Deleteing item:", error)
+            toast.error('Error During removing the product');
         }
     };
 

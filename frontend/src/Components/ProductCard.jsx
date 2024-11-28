@@ -1,27 +1,29 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import {useNavigate} from 'react-router-dom'
+import { handleAddToCart } from "../../utils/utils";
 
 export const ProductCard = ({ data }) => {
 
+    const navigate = useNavigate();
 
-    // const handleViewProduct = (productId) => {
-    //     navigate(`/product/${productId}`);
-    // };
+    const handleViewProduct = (productId) => {
+        navigate(`/product/${productId}`);
+    };
 
     const [quantity] = useState(1);
 
 
-    const handleAddToCart = async (productId, quantity, productTitle, price, images) => {
-        try {
-            const response = await axios.post('http://localhost:8000/cartItem', { productId, quantity, productTitle, price, images })
+    // const handleAddToCart = async (productId, quantity, productTitle, price, images) => {
+    //     try {
+    //         const response = await axios.post('http://localhost:8000/cartItem', { productId, quantity, productTitle, price, images })
 
-            console.log('Added product to cart:', response.data);
-        }
-        catch (err) {
-            console.error('Error adding product to cart:', err.message);
-            console.log("Failed to add product to cart");
-        }
-    }
+    //         console.log('Added product to cart:', response.data);
+    //     }
+    //     catch (err) {
+    //         console.error('Error adding product to cart:', err.message);
+    //         console.log("Failed to add product to cart");
+    //     }
+    // }
 
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
@@ -77,7 +79,7 @@ export const ProductCard = ({ data }) => {
                             </button>
                             <button
 
-                                // onClick={() => handleViewProduct(datas._id) }
+                                onClick={() => handleViewProduct(datas._id) }
 
                                 className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                 View
