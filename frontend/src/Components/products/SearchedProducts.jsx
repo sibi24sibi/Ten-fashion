@@ -1,10 +1,10 @@
 import { useState } from "react";
-import StrawberryShort1 from "../assets/images/productDetails/Strawberry_short1.jpg";
-import HeroImage from "../assets/images/productDetails/product_details_hero.jpg";
+import StrawberryShort1 from "../../assets/images/productDetails/Strawberry_short1.jpg";
+import HeroImage from "../../assets/images/productDetails/product_details_hero.jpg";
 import { FaFilter } from "react-icons/fa";
-import filterIcon1 from "../assets/images/searchedProducts/filter_icon1.jpeg";
-import filterIcon2 from "../assets/images/searchedProducts/filter_icon2.jpeg";
-import filterIcon3 from "../assets/images/searchedProducts/filter_icon3.jpeg";
+import filterIcon1 from "../../assets/images/searchedProducts/filter_icon1.jpeg";
+import filterIcon2 from "../../assets/images/searchedProducts/filter_icon2.jpeg";
+import filterIcon3 from "../../assets/images/searchedProducts/filter_icon3.jpeg";
 import { Dropdown } from "flowbite-react";
 
 function SearchedProducts() {
