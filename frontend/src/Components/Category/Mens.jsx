@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 export const Mens = () => {
 
     const [filteredData, setFilteredData] = useState([]);
+    const [quantity] = useState(1);
     console.log(filteredData)
 
     const navigate = useNavigate();
@@ -34,7 +35,7 @@ export const Mens = () => {
         <>
         {
             filteredData.length !== 0 ? (
-                <div className='grid grid-cols-4 gap-10'>
+                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10'>
                 {
                     filteredData.map((data, index) => (
                         <div key={index} className='h-auto w-auto border-[1px] flex flex-col items-center rounded-lg'>
@@ -42,7 +43,7 @@ export const Mens = () => {
                             <div className='text-xl font-medium'>{data.productTitle}</div>
                             <div className='flex items-center gap-[2.5rem] my-2'>
                                 <div className='text-xl font-medium'>Rs. {data.price}</div>
-                                <button onClick={handleAddToCart} type='button' className='py-2.5 px-3.5 bg-blue-600 hover:bg-blue-800 text-sm text-white font-medium rounded-md'>Add to Cart</button>
+                                <button onClick={() => handleAddToCart(data._id, quantity, data.productTitle, data.price, data.images)} type='button' className='py-2.5 px-3.5 bg-blue-600 hover:bg-blue-800 text-sm text-white font-medium rounded-md'>Add to Cart</button>
                             </div>
                         </div>                
                     ))
