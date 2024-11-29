@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { ProductCard } from "../ProductCard";
+import HeroCarousel from "../HeroCaraousel/HeroCaraousel";
 
 export const HomePage = () => {
   const [products, setProducts] = useState([]);
@@ -15,7 +16,11 @@ export const HomePage = () => {
 
   return (
     <div>
-      <ProductCard data={products} />
+      <HeroCarousel />
+      <div>
+        <h1 className="text-4xl text-center pt-8 pb-4">Featured Products</h1>
+        <ProductCard data={products} />
+      </div>
     </div>
   );
 };
