@@ -22,6 +22,7 @@ import { Womens } from "./Components/Category/Womens";
 import { Mens } from "./Components/Category/Mens";
 import { Kids } from "./Components/Category/Kids";
 import ProtectRoute from "./Auth/ProtectRoute"
+import { OrderForm } from "./Components/order-form/OrderForm";
 
 function App() {
   const [isSignup, setIsSignup] = useState(false)
@@ -59,6 +60,7 @@ function App() {
           <Route path="/shop/womens" element={<Womens />} />
           <Route path="/shop/mens" element={<Mens />} />
           <Route path="/shop/kids" element={<Kids />} />
+          <Route path="/order-form" element={<OrderForm />} />
           <Route path="*" element={<h1>Page not found</h1>} />
         </Routes>
       </div>
