@@ -1,22 +1,47 @@
-import { Button, TextInput } from "flowbite-react";
-import { useState } from "react";
+import { Button, TextInput } from "flowbite-react"
+import { useState } from "react"
+import toast from "react-hot-toast"
+import { useNavigate } from "react-router-dom"
 
 function SignupForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
-
-  function handleSubmit(e) {
-    e.preventDefault();
-
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
+  const [error, setError] = useState("")
+  const navigate = useNavigate()
+  console.log(email, password, confirmPassword)
+  const handleSubmit = async (e) => {
+    e.preventDefault()
     if (password !== confirmPassword) {
-      setError("Passwords do not match");
-      return;
+      setError("Passwords do not match")
+      return
+    }
+    try {
+      const responce = await fetch("http://localhost:8000/api/auth/signup", {
+        method: "POST",
+        // credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password, confirmPassword }),
+      })
+      if (!responce.ok) {
+        throw new Error("failed to signup user")
+      }
+
+      const data = await responce.json()
+      if (data.success === false) {
+        return toast.error(data.message)
+      }
+
+      toast.success(data.message)
+      navigate("/login")
+    } catch (error) {
+      throw new Error(error)
     }
 
-    console.log("Signing up with details:", { email, password });
-    setError("");
+    console.log("Signing up with details:", { email, password })
+    setError("")
   }
 
   return (
@@ -34,7 +59,7 @@ function SignupForm() {
           type="email"
           value={email}
           onChange={({ target }) => {
-            setEmail(target.value);
+            setEmail(target.value)
           }}
           placeholder="johndoe@gmail.com"
           required
@@ -90,7 +115,7 @@ function SignupForm() {
       {/* Submit Button */}
       <Button type="submit">Create new account</Button>
     </form>
-  );
+  )
 }
 
-export default SignupForm;
+export default SignupForm
