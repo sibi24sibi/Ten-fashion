@@ -1,5 +1,4 @@
-import { useState } from "react";
-import StrawberryShort1 from "../../assets/images/productDetails/Strawberry_short1.jpg";
+import React, { useState, useEffect } from "react";
 import HeroImage from "../../assets/images/productDetails/product_details_hero.jpg";
 import { FaFilter } from "react-icons/fa";
 import filterIcon1 from "../../assets/images/searchedProducts/filter_icon1.jpeg";
@@ -11,7 +10,10 @@ function SearchedProducts() {
   const [isChecked, setIsChecked] = useState(false);
   const [flexBasis, setFlexBasis] = useState("23%");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("Sort by Relevance");
+  const [selectedOption, setSelectedOption] = useState("Price: high to low");
+  const [products, setProducts] = useState([]);
+  const [sortedProducts, setSortedProducts] = useState([]);
+  const [error, setError] = useState(null);
 
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
@@ -27,70 +29,40 @@ function SearchedProducts() {
 
   const handleSelect = (option) => {
     setSelectedOption(`Sort by ${option}`);
+    if (option === "Price: low to high") {
+      sortProducts("asc");
+    } else if (option === "Price: high to low") {
+      sortProducts("desc");
+    }
   };
 
-  const products = [
-    {
-      id: 1,
-      image: StrawberryShort1,
-      name: "Denim Classic Jacket - Unisex",
-      price: "₹1,250.00",
-    },
-    {
-      id: 2,
-      image: StrawberryShort1,
-      name: "Cotton Summer Dress - Women",
-      price: "₹799.00",
-    },
-    {
-      id: 3,
-      image: StrawberryShort1,
-      name: "Basic Slim Fit T-Shirt - Men",
-      price: "₹499.00",
-    },
-    {
-      id: 4,
-      image: StrawberryShort1,
-      name: "Cargo Utility Pants - Men",
-      price: "₹1,050.00",
-    },
-    {
-      id: 5,
-      image: StrawberryShort1,
-      name: "Casual Canvas Shoes - Unisex",
-      price: "₹1,299.00",
-    },
-    {
-      id: 6,
-      image: StrawberryShort1,
-      name: "Floral Print Maxi Dress - Women",
-      price: "₹1,450.00",
-    },
-    {
-      id: 7,
-      image: StrawberryShort1,
-      name: "Athletic Running Shoes - Men",
-      price: "₹2,200.00",
-    },
-    {
-      id: 8,
-      image: StrawberryShort1,
-      name: "Woolen Winter Scarf - Unisex",
-      price: "₹650.00",
-    },
-    {
-      id: 9,
-      image: StrawberryShort1,
-      name: "Leather Tote Bag - Women",
-      price: "₹1,899.00",
-    },
-    {
-      id: 10,
-      image: StrawberryShort1,
-      name: "Classic White Sneakers - Unisex",
-      price: "₹1,750.00",
-    },
-  ];
+  const sortProducts = (order) => {
+    const sorted = [...products].sort((a, b) => {
+      if (order === "asc") return a.price - b.price;
+      if (order === "desc") return b.price - a.price;
+      return 0;
+    });
+    setSortedProducts(sorted);
+  };
+
+  useEffect(() => {
+    // Fetch data from the API
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch("http://localhost:8000/api/products");
+        if (!response.ok) {
+          throw new Error("Failed to fetch products");
+        }
+        const data = await response.json();
+        setProducts(data);
+        setSortedProducts(data); // Initialize sorted products with fetched products
+      } catch (err) {
+        setError(err.message);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   return (
     <div className="w-full">
@@ -160,18 +132,6 @@ function SearchedProducts() {
             inline
             className="dark:text-white"
           >
-            <Dropdown.Item onClick={() => handleSelect("Relevance")}>
-              Relevance
-            </Dropdown.Item>
-            <Dropdown.Item onClick={() => handleSelect("Popularity")}>
-              Popularity
-            </Dropdown.Item>
-            <Dropdown.Item onClick={() => handleSelect("Average rating")}>
-              Average rating
-            </Dropdown.Item>
-            <Dropdown.Item onClick={() => handleSelect("Latest")}>
-              Latest
-            </Dropdown.Item>
             <Dropdown.Item onClick={() => handleSelect("Price: low to high")}>
               Price: low to high
             </Dropdown.Item>
@@ -219,13 +179,27 @@ function SearchedProducts() {
 
       {/* Products Section */}
       <div className="w-[80%] flex flex-wrap gap-5 justify-start m-auto max-2xl:w-[90%] max-lg:w-[95%] max-lg:gap-x-4 max-md:w-[98%] max-md:gap-x-2">
-        {products.map((data) => (
-          <div key={data.id} style={{ flexBasis }}>
-            <img className="w-full" src={data.image} alt={data.name} />
-            <h1 className="font-semibold">{data.name}</h1>
-            <h1 className="text-gray-600">{data.price}</h1>
+        {error ? (
+          <div className="text-red-600 font-semibold w-full text-center">
+            Failed to load products: {error}
           </div>
-        ))}
+        ) : sortedProducts.length > 0 ? (
+          sortedProducts.map((data) => (
+            <div key={data.id} style={{ flexBasis }}>
+              <img
+                className="w-full"
+                src={data.images}
+                alt={data.productTitle}
+              />
+              <h1 className="font-semibold">{data.productTitle}</h1>
+              <h1 className="text-gray-600">{data.price}</h1>
+            </div>
+          ))
+        ) : (
+          <div className="text-gray-600 font-semibold w-full text-center">
+            No products found.
+          </div>
+        )}
       </div>
     </div>
   );
