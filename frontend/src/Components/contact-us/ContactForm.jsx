@@ -25,6 +25,7 @@ const ContactForm = () => {
         formData
       );
       setResponseMessage(response.data.message);
+      setFormData({ fullName: "", email: "", Subject: "", message: "" }); // Reset form
     } catch (error) {
       console.error("Error submitting form:", error);
       setResponseMessage(error.response?.data?.error || "An error occurred");
@@ -44,7 +45,7 @@ const ContactForm = () => {
       )}
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
             Your name
           </label>
           <input
@@ -53,11 +54,11 @@ const ContactForm = () => {
             value={formData.fullName}
             onChange={handleChange}
             required
-            className="w-full px-3 py-2 border rounded-md"
+            className="w-full px-3 py-2 border rounded-md bg-white dark:bg-slate-700 text-gray-900 dark:text-gray-100"
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
             Your email
           </label>
           <input
@@ -66,11 +67,11 @@ const ContactForm = () => {
             value={formData.email}
             onChange={handleChange}
             required
-            className="w-full px-3 py-2 border rounded-md"
+            className="w-full px-3 py-2 border rounded-md bg-white dark:bg-slate-700 text-gray-900 dark:text-gray-100"
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
             Subject
           </label>
           <input
@@ -79,18 +80,18 @@ const ContactForm = () => {
             value={formData.Subject}
             onChange={handleChange}
             required
-            className="w-full px-3 py-2 border rounded-md"
+            className="w-full px-3 py-2 border rounded-md bg-white dark:bg-slate-700 text-gray-900 dark:text-gray-100"
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
             Your message (optional)
           </label>
           <textarea
             name="message"
             value={formData.message}
             onChange={handleChange}
-            className="w-full px-3 py-2 border rounded-md"
+            className="w-full px-3 py-2 border rounded-md bg-white dark:bg-slate-700 text-gray-900 dark:text-gray-100"
           ></textarea>
         </div>
         <button
