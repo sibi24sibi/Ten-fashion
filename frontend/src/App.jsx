@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import Navbar from "../src/components/Navbar/Navbar";
@@ -25,13 +25,10 @@ import ProtectRoute from "./Auth/ProtectRoute"
 import { OrderForm } from "./Components/order-form/OrderForm";
 
 function App() {
-  const [isSignup, setIsSignup] = useState(false)
-
+  const [isSignup, setIsSignup] = useState(false);
   const toggleForm = () => {
-    setIsSignup(!isSignup)
-  }
-
-
+    setIsSignup(!isSignup);
+  };
 
   return (
     <div className="dark:bg-gray-700 h-auto flex flex-col">
@@ -46,12 +43,12 @@ function App() {
             element={<SignupForm toggleForm={toggleForm} />}
           />
           <Route path="/login" element={<LoginForm />} />
-        <Route element={<ProtectRoute />}>
+          {/* <Route element={<ProtectRoute />}> */}
           <Route path="/contact-us" element={<ContactPage />} />
           <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/searched-products" element={<SearchedProducts />} />
-          <Route path="/cart" element={<Shopping_Cart />} />          
-        </Route>
+          <Route path="/cart" element={<Shopping_Cart />} />
+          {/* </Route> */}
           <Route path="/admin/products/new" element={<ProductForm />} />
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
           <Route path="/admin/products" element={<ProductList />} />
@@ -68,7 +65,7 @@ function App() {
       <Footer />
       <ToastContainer />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
