@@ -21,8 +21,9 @@ import "react-toastify/dist/ReactToastify.css";
 import { Womens } from "./Components/Category/Womens";
 import { Mens } from "./Components/Category/Mens";
 import { Kids } from "./Components/Category/Kids";
-import ProtectRoute from "./Auth/ProtectRoute"
+import ProtectRoute from "./Auth/ProtectRoute";
 import { OrderForm } from "./Components/order-form/OrderForm";
+import ProductEdit from "./Components/Admin/Product/ProductEdit";
 
 function App() {
   const [isSignup, setIsSignup] = useState(false);
@@ -50,6 +51,7 @@ function App() {
           <Route path="/cart" element={<Shopping_Cart />} />
           {/* </Route> */}
           <Route path="/admin/products/new" element={<ProductForm />} />
+          <Route path="/admin/products/:id/edit" element={<ProductEdit />} />
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
           <Route path="/admin/products" element={<ProductList />} />
           <Route path="/admin/orders" element={<OrderList />} />
