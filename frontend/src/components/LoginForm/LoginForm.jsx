@@ -1,19 +1,19 @@
-import { Button, Checkbox, Label, TextInput } from "flowbite-react"
-import { useState } from "react"
-import toast from "react-hot-toast"
-import { useNavigate } from "react-router-dom"
-import { useUserContext } from "../../context/useContext.jsx"
+import { Button, Checkbox, Label, TextInput } from "flowbite-react";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { useUserContext } from "../../context/useContext.jsx";
 
 function LoginForm() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [remember, setRemember] = useState(false)
-  const navigate = useNavigate()
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [remember, setRemember] = useState(false);
+  const navigate = useNavigate();
   const { setCurrentUser, loading, setLoading, error, setError } =
-    useUserContext()
+    useUserContext();
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setLoading(true)
+    e.preventDefault();
+    setLoading(true);
     try {
       const responce = await fetch("http://localhost:8000/api/auth/login", {
         method: "POST",
@@ -22,30 +22,34 @@ function LoginForm() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ email, password }),
-      })
+      });
 
       if (!responce.ok) {
-        throw new Error("failed to sign in User")
+        throw new Error("failed to sign in User");
       }
-      const data = await responce.json()
-      console.log(data)
+      const data = await responce.json();
+      console.log(data);
+      localStorage.setItem("token", data.token);
       if (data.success === false) {
-        setError(data.message)
-        setLoading(false)
-        return toast.error(data.message)
+        setError(data.message);
+        setLoading(false);
+        return toast.error(data.message);
       }
-      setLoading(false)
-      setCurrentUser(data.rest)
-      setError(null)
-      toast.success(data.message)
-      navigate("/")
+      setLoading(false);
+      setCurrentUser(data.rest);
+      setError(null);
+      toast.success(data.message);
+      navigate("/");
     } catch (error) {
-      throw new Error(error)
+      throw new Error(error);
     }
-  }
+  };
 
   return (
-    <form className="flex max-w-md flex-col gap-4 my-[4%]" onSubmit={handleSubmit}>
+    <form
+      className="flex max-w-md flex-col gap-4 my-[4%]"
+      onSubmit={handleSubmit}
+    >
       {/* Email Field */}
       <div className="flex items-center gap-2">
         <label
@@ -97,7 +101,7 @@ function LoginForm() {
       {/* Submit Button */}
       <Button type="submit">Submit</Button>
     </form>
-  )
+  );
 }
 
-export default LoginForm
+export default LoginForm;
