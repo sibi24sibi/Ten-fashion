@@ -1,9 +1,29 @@
+import { useEffect, useState } from "react";
 import { data } from "./data";
+import axios from "axios";
 
 export const OrderForm = () => {
 
+    const [cartItems, setCartItems] = useState([])
+    console.log(cartItems)
+    const token = localStorage.getItem('token')
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get('http://localhost:8000/cartItems',{
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                setCartItems(response.data.flatMap((resp) => (resp.products)))
+            } catch (err) {
+                console.log('error on fecting cart product data :' + err)
+            }
+        }
+        fetchData();
+    }, [])
+
     const totalAmount = () => {
-        return data.reduce((acc, item) => acc + item.price * (item.quantity), 0);
+        return cartItems.reduce((acc, item) => acc + item.price * (item.quantity), 0);
     };
 
     return (
@@ -67,10 +87,10 @@ export const OrderForm = () => {
                     <hr className="my-5 h-[2px] bg-black" />
                 </div>
                 {
-                    data.map((item) => (
-                        <div key={item.id} className="my-4">
+                    cartItems.map((item) => (
+                        <div key={item.productId} className="my-4">
                             <div className="text-[1.1rem] flex justify-between items-center">
-                                <div className="w-[60%] ml-1">{`${item.title}  × ${item.quantity}`}</div>
+                                <div className="w-[60%] ml-1">{`${item.productTitle}  × ${item.quantity}`}</div>
                                 <div className="mr-2.5">{`₹${item.price * item.quantity}`}</div>
                             </div>
                             <hr className="my-5 h-[2px] bg-black" />

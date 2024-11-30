@@ -14,8 +14,6 @@ import { handleAddToCart } from "../../../utils/utils";
 import { ProductCard } from "../ProductCard";
 
 function ProductDetails() {
-  const [selectedImage, setSelectedImage] = useState(StrawberryShort1);
-  const [activeTab, setActiveTab] = useState("Description");
   const [isHeartFilled, setIsHeartFilled] = useState(false);
 
   const [prodId, setProdId] = useState(null);
@@ -38,15 +36,6 @@ function ProductDetails() {
   const toggleHeart = () => {
     setIsHeartFilled(!isHeartFilled);
   };
-
-  const images = [
-    StrawberryShort1,
-    StrawberryShort2,
-    StrawberryShort3,
-    StrawberryShort4,
-    StrawberryShort5,
-    StrawberryShort6,
-  ];
 
   useEffect(() => {
     const fetchData = async () => {

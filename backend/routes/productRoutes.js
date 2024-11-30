@@ -9,6 +9,7 @@ const {
   addToCart,
   getCart,
   deleteFromCart,
+  updateQuantity,
 } = require("../controllers/cartController.js");
 
 const authMiddleware = require("../middleware/authmiddleware");
@@ -23,5 +24,7 @@ router.get("/api/products", getProducts); // GET /api/products
 router.post("/cartItem", authMiddleware, addToCart); // POST route for adding to cart
 router.get("/cartItems", authMiddleware, getCart); // GET route for retrieving the cart
 router.delete("/cartItems", authMiddleware, deleteFromCart); // DELETE route for removing the cart
+router.patch("/cartItem", authMiddleware, updateQuantity); // PATCH route for updating quantity in cart
+
 
 module.exports = router;
