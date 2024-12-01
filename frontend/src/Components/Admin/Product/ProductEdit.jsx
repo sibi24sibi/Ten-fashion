@@ -146,7 +146,7 @@ const ProductEdit = () => {
             name="productTitle"
             value={formData.productTitle}
             onChange={handleChange}
-            className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-gray-900"
             required
           />
         </div>
@@ -162,7 +162,7 @@ const ProductEdit = () => {
             name="price"
             value={formData.price}
             onChange={handleChange}
-            className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-gray-900"
             required
           />
         </div>
@@ -180,7 +180,7 @@ const ProductEdit = () => {
             name="productDescription"
             value={formData.productDescription}
             onChange={handleChange}
-            className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-gray-900"
             rows="4"
           />
         </div>
@@ -195,7 +195,7 @@ const ProductEdit = () => {
             type="file"
             name="image"
             onChange={handleFileChange}
-            className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-gray-900"
           />
         </div>
 
@@ -209,7 +209,7 @@ const ProductEdit = () => {
             name="category"
             value={formData.category}
             onChange={handleChange}
-            className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-gray-900"
             required
           >
             <option value="">Select a category</option>
@@ -231,7 +231,7 @@ const ProductEdit = () => {
             name="subCategory"
             value={formData.subCategory}
             onChange={handleChange}
-            className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-gray-900"
             required
           >
             <option value="">Select a subcategory</option>

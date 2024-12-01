@@ -24,6 +24,7 @@ import { Kids } from "./Components/Category/Kids";
 import ProtectRoute from "./Auth/ProtectRoute";
 import { OrderForm } from "./Components/order-form/OrderForm";
 import ProductEdit from "./Components/Admin/Product/ProductEdit";
+import Wishlist from "./Components/Wishlist/Wishlist";
 
 function App() {
   const [isSignup, setIsSignup] = useState(false);
@@ -47,6 +48,7 @@ function App() {
           {/* <Route element={<ProtectRoute />}> */}
           <Route path="/contact-us" element={<ContactPage />} />
           <Route path="/product/:id" element={<ProductDetails />} />
+          <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/searched-products" element={<SearchedProducts />} />
           <Route path="/cart" element={<Shopping_Cart />} />
           {/* </Route> */}

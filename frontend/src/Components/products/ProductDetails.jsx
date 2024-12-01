@@ -1,17 +1,11 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import HeroImage from "../../assets/images/productDetails/product_details_hero.jpg";
-import StrawberryShort1 from "../../assets/images/productDetails/Strawberry_short1.jpg";
-import StrawberryShort2 from "../../assets/images/productDetails/Strawberry_short2.jpg";
-import StrawberryShort3 from "../../assets/images/productDetails/Strawberry_short3.jpg";
-import StrawberryShort4 from "../../assets/images/productDetails/Strawberry_short4.jpg";
-import StrawberryShort5 from "../../assets/images/productDetails/Strawberry_short5.jpg";
-import StrawberryShort6 from "../../assets/images/productDetails/Strawberry_short6.jpg";
-import Facebook from "../../assets/images/productDetails/Facebook.png";
-import Linkedin from "../../assets/images/productDetails/Linkedin.webp";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import { handleAddToCart } from "../../../utils/utils";
 import { ProductCard } from "../ProductCard";
+import { useUserContext } from "../../context/useContext";
+import { addToWishlist, removeFromWishlist } from "../../../utils/wishlist";
 
 function ProductDetails() {
   const [isHeartFilled, setIsHeartFilled] = useState(false);
@@ -20,6 +14,11 @@ function ProductDetails() {
   const [productData, setProductData] = useState([]);
   const [quantity, setQuantity] = useState(1);
 
+  const [isInWishlist, setIsInWishlist] = useState(false);
+  const [alert, setAlert] = useState({ show: false, message: "", type: "" });
+  const [loading, setLoading] = useState(false);
+
+  const { currentUser } = useUserContext();
   const data = productData.filter((data) => data._id === prodId);
   console.log(data[0]);
 
@@ -36,6 +35,24 @@ function ProductDetails() {
   const toggleHeart = () => {
     setIsHeartFilled(!isHeartFilled);
   };
+
+  const handleWishlistToggle = async () => {
+    setLoading(true);
+    try {
+      if (isInWishlist) {
+        await removeFromWishlist(currentUser._id, prodId);
+        console.log("Removed from wishlist", "success");
+      } else {
+        await addToWishlist(currentUser._id, prodId);
+        console.log("Added to wishlist", "success");
+      }
+      setIsInWishlist(!isInWishlist);
+    } catch (error) {
+      console.log("Failed to update wishlist", error);
+    }
+    setLoading(false);
+  };
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -91,11 +108,15 @@ function ProductDetails() {
           <h1 className="text-4xl font-semibold">{data[0]?.productTitle}</h1>
           <div className="flex items-center mt-2.5 mb-5">
             <div className="flex items-center space-x-1 rtl:space-x-reverse">
-            {/* Render stars based on rating */}
+              {/* Render stars based on rating */}
               {[1, 2, 3, 4, 5].map((star) => (
                 <svg
                   key={star}
-                  className={`w-4 h-4 ${star <= data[0]?.rating ? 'text-yellow-300' : 'text-gray-200'}`}
+                  className={`w-4 h-4 ${
+                    star <= data[0]?.rating
+                      ? "text-yellow-300"
+                      : "text-gray-200"
+                  }`}
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="currentColor"
@@ -106,7 +127,8 @@ function ProductDetails() {
               ))}
             </div>
             <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ms-3">
-                {data[0]?.rating ? data[0]?.rating.toFixed(1) : "No rating"} {/* Display the rating */}
+              {data[0]?.rating ? data[0]?.rating.toFixed(1) : "No rating"}{" "}
+              {/* Display the rating */}
             </span>
           </div>
           <div className="mt-10 ml-2 flex max-md:mt-5">
@@ -142,32 +164,39 @@ function ProductDetails() {
             </div>
 
             <button
-              className="w-[70%] flex justify-center bg-black text-white font-bold border border-black py-2 rounded-3xl hover:bg-white hover:text-black max-md:w-[100%]"
-              onClick={() =>
-                handleAddToCart(
-                  data[0]?._id,
-                  quantity,
-                  data[0]?.productTitle,
-                  data[0]?.price,
-                  data[0]?.images
-                )
-              }
+              className={`w-full py-3 rounded-lg transition flex items-center justify-center gap-2 ${
+                loading ? "opacity-50 cursor-not-allowed" : ""
+              }`}
+              onClick={handleWishlistToggle}
+              disabled={loading}
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 mr-2"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M3 3h2l.4 2M7 13h10l1.1-6H6.5m-3.5 6L4 3m4.5 10L5 21h14l1.5-8m-13.5 8h10"
-                />
-              </svg>
-              Add to basket
+              {isInWishlist ? (
+                <>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6"
+                    fill="red"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                  </svg>
+                  Remove from Wishlist
+                </>
+              ) : (
+                <>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                  </svg>
+                  Add to Wishlist
+                </>
+              )}
             </button>
           </div>
 
@@ -244,14 +273,22 @@ function ProductDetails() {
         {/* Tab Content */}
         <div className="w-[100%] mx-auto py-5 ml-2">
           {/* {activeTab === "Description" && ( */}
-            <div>
-              <ul className="text-lg">
-                <li>{`Category: ${data[0]?.category}`}</li>
-                <li>{(data[0]?.productDescription.split('.').map(sentence => sentence.trim()).filter(sentence => sentence).map((line, index) => (
-                  <p className="my-3" key={index}>{line}.</p>
-                )))}</li>
-              </ul>
-            </div>
+          <div>
+            <ul className="text-lg">
+              <li>{`Category: ${data[0]?.category}`}</li>
+              <li>
+                {data[0]?.productDescription
+                  .split(".")
+                  .map((sentence) => sentence.trim())
+                  .filter((sentence) => sentence)
+                  .map((line, index) => (
+                    <p className="my-3" key={index}>
+                      {line}.
+                    </p>
+                  ))}
+              </li>
+            </ul>
+          </div>
           {/* )} */}
           {/* {activeTab === "Additional Information" && (
             <div>
@@ -356,7 +393,7 @@ function ProductDetails() {
                   </tr>
                 </tbody>
               </table> */}
-            {/* </div>
+          {/* </div>
           )} */}
         </div>
         <hr className="w-full mx-auto m-10 h-0.5 bg-gray-600" />
