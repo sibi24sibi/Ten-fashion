@@ -6,14 +6,15 @@ const productRoutes = require("./routes/productRoutes.js");
 const contactRoute = require("./routes/ContactRoute.js");
 const authRoutes = require("./routes/authRoutes.js");
 const orderRoutes = require("./routes/orderRoutes.js");
-const cookieParser = require("cookie-parser")
+const wishlistRoutes = require("./routes/wishlistRoutes.js");
+const cookieParser = require("cookie-parser");
 // Load environment variables
-dotenv.config({ path: "../.env" })
+dotenv.config({ path: "../.env" });
 
-const app = express()
-const PORT = process.env.PORT || 8000
+const app = express();
+const PORT = process.env.PORT || 8000;
 const CONNECTION_URL =
-  process.env.CONNECTION_URL || "mongodb://localhost:27017/tenFashion"
+  process.env.CONNECTION_URL || "mongodb://localhost:27017/tenFashion";
 
 // Middleware
 app.use(
@@ -21,21 +22,22 @@ app.use(
     origin: "http://localhost:5173",
     credentials: true,
   })
-)
-app.use(express.json()) 
+);
+app.use(express.json());
 
-app.use(cookieParser())
+app.use(cookieParser());
 
 // Database connection
-connectDB(CONNECTION_URL)
+connectDB(CONNECTION_URL);
 
 // Routes
-app.use("/", productRoutes)
-app.use("/", contactRoute)
-app.use("/api/auth", authRoutes)
+app.use("/", productRoutes);
+app.use("/", contactRoute);
+app.use("/api/auth", authRoutes);
 app.use("/api/orders", orderRoutes);
+app.use("/", wishlistRoutes);
 
 // Start the server
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`)
-})
+  console.log(`Server is running on port ${PORT}`);
+});
