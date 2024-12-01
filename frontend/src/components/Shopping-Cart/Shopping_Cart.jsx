@@ -1,16 +1,25 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from 'react-toastify';
+import {Link} from 'react-router-dom';
 
 export const Shopping_Cart = () => {
 
     const [cartItems, setCartItems] = useState([]);
     console.log(cartItems)
 
+    const token = localStorage.getItem("token")
+    if (!token) {
+        toast.error("User is not authenticated. Please log in.");
+        return;
+    }
+
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:8000/cartItems')
+                const response = await axios.get('http://localhost:8000/cartItems',{
+                    headers: { Authorization: `Bearer ${token}` }
+                });
                 setCartItems(response.data.flatMap((resp) => (resp.products)))
             } catch (err) {
                 console.log('error on fecting cart product data :' + err)
@@ -19,10 +28,26 @@ export const Shopping_Cart = () => {
         fetchData();
     }, [])
 
-    const updateQuantity = (id, amount) => {
-        setCartItems(cartItems.map(item =>
-            item._id === id ? { ...item, quantity: item.quantity + amount } : item
-        ));
+    const updateQuantity = async (productId, amount) => {
+        const updatedCart = cartItems.map(item =>
+            item._id === productId ? { ...item, quantity: item.quantity + amount } : item
+        );
+        setCartItems(updatedCart);
+
+        try {
+            const response = await axios.patch('http://localhost:8000/cartItem',
+                {
+                    productId,
+                    quantity:  amount,
+                },
+                {
+                    headers: { Authorization: `Bearer ${token}` }
+                }
+            );
+            setCartItems(response.data.products)
+        } catch (error) {
+            console.error(error)
+        }
     };
 
     const totalAmount = () => {
@@ -33,6 +58,7 @@ export const Shopping_Cart = () => {
         try {
             await axios.delete(`http://localhost:8000/cartItems`,{
                 data : { productId: id },
+                headers: { Authorization: `Bearer ${token}` }   
             });
             setCartItems(cartItems.filter(item => item.productId !== id));
             toast.success('product removed from cart');
@@ -71,9 +97,9 @@ export const Shopping_Cart = () => {
                                                 <div className="flex justify-between gap-[3.5rem] md:flex-row lg:flex-row items-center md:gap-[5.5rem] lg:gap-[8rem] md:mt-0 lg:mt-0 mt-8">
                                                     <div>₹{item.price}</div>
                                                     <div className="flex items-center gap-[2rem] border-2 rounded-xl">
-                                                        <button className="ml-2 text-md md:text-lg lg:text-xl font-medium" onClick={() => updateQuantity(item._id, -1)} disabled={item.quantity === 1}>-</button>
+                                                        <button className="ml-2 text-md md:text-lg lg:text-xl font-medium" onClick={() => updateQuantity(item.productId, -1)} disabled={item.quantity === 1}>-</button>
                                                         <div className="text-sm">{item.quantity}</div>
-                                                        <button className="mr-2 text-md md:text-lg lg:text-xl font-medium" onClick={() => updateQuantity(item._id, 1)}>+</button>
+                                                        <button className="mr-2 text-md md:text-lg lg:text-xl font-medium" onClick={() => updateQuantity(item.productId, 1)}>+</button>
                                                     </div>
                                                     <div className="font-semibold">₹{item.quantity * item.price}</div>
                                                 </div>
@@ -94,7 +120,11 @@ export const Shopping_Cart = () => {
                                     <div className="text-sm font-medium">Total</div>
                                     <div className="text-4xl font-semibold">₹{totalAmount()}</div>
                                 </div>
-                                <button className="border-2 rounded-full py-4 mt-6 bg-black text-white font-semibold text-xl hover:text-black hover:bg-white hover:border-black">Proceed to checkout</button>
+                                <button className="border-2 rounded-full py-4 mt-6 bg-black text-white font-semibold text-xl hover:text-black hover:bg-white hover:border-black">
+                                <Link to='/order-form'>
+                                    Proceed to checkout
+                                </Link>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -102,9 +132,11 @@ export const Shopping_Cart = () => {
                     <div className="flex items-center justify-center min-h-screen">
                         <div className="text-center">
                             <div className="text-3xl my-2">Your basket is currently empty.</div>
+                            <Link to='/'>
                             <button className="border-2 rounded-full py-4 mt-6 bg-black text-white font-semibold text-xl hover:text-black hover:bg-white hover:border-black w-full">
                                 Return to shop
                             </button>
+                            </Link>
                         </div>
                     </div>
                 )

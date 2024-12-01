@@ -1,10 +1,25 @@
 import { Avatar, Dropdown, Navbar as FlowbiteNavbar } from "flowbite-react"
 import { FaSearch, FaHeart, FaShoppingCart } from "react-icons/fa"
 import DarkModeToggle from "../DarkModeToggle/DarkModeToggle"
-import { Link } from "react-router-dom" // For React Router
+import { Link, useNavigate } from "react-router-dom" // For React Router
+import { useState } from "react";
 
 function Navbar() {
+
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const navigate = useNavigate();
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+  const handleSearch = () => {
+    navigate(`/searched-products`);
+    // navigate(`/products?search=${searchQuery}`);
+    setIsSidebarOpen(false);
+  };
+
   return (
+    <>
     <FlowbiteNavbar fluid rounded border className="py-4">
       <FlowbiteNavbar.Brand>
         <span className="text-2xl sm:text-sm md:text-xl xl:text-3xl text-gray-900 dark:text-white">
@@ -43,12 +58,17 @@ function Navbar() {
 
         {/* Icons Section */}
         <div className="flex flex-row items-center justify-around gap-4 md:gap-6 lg:gap-8 mt-4 md:mt-0 md:justify-end">
-          <Link
+          {/* <Link
             to="/search"
             className="text-gray-800 dark:text-white cursor-pointer"
-          >
+          > */}
+            <button
+              onClick={toggleSidebar}
+              className="text-gray-800 dark:text-white cursor-pointer"
+            >
             <FaSearch />
-          </Link>
+            </button>
+          {/* </Link> */}
           <Link
             to="/wishlist"
             className="text-gray-800 dark:text-white cursor-pointer"
@@ -83,6 +103,36 @@ function Navbar() {
         </div>
       </FlowbiteNavbar.Collapse>
     </FlowbiteNavbar>
+    {/* Sidebar */}
+    {isSidebarOpen && (
+      <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex">
+        {/* Sidebar on the right */}
+        <div className="absolute top-0 right-0 w-[18%] bg-white dark:bg-gray-800 h-full p-4 shadow-lg">
+          <button
+            onClick={toggleSidebar}
+            className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+          >
+            X
+          </button>
+          <input
+            type="text"
+            placeholder="Search Products..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)} // Update state
+            className="w-full mt-4 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+          />
+          <button
+            onClick={handleSearch}
+            className="w-full mt-4 bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600"
+          >
+            Search
+          </button>
+        </div>
+        {/* Click outside to close */}
+        <div className="flex-grow" onClick={toggleSidebar}></div>
+      </div>
+    )}
+    </>
   )
 }
 

@@ -53,6 +53,7 @@ function ProductDetails() {
     setLoading(false);
   };
 
+
   useEffect(() => {
     const fetchData = async () => {
       try {

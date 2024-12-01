@@ -86,5 +86,36 @@ const deleteFromCart = async (req, res) => {
   }
 };
 
+const updateQuantity = async (req, res) => {
+  const {productId, quantity} =  req.body;
+  
+  try {
+    const cart = await Cart.findOne({ userId: req.user._id });
 
-module.exports = { addToCart, getCart, deleteFromCart };
+    if (!cart) {
+      return res.status(404).send('Item not found in Cart');
+    }
+
+    const product = cart.products.find(item => item.productId.toString() === productId)
+    if (!product) {
+      return res.status(404).send('Product not found in cart.');
+    }
+
+    product.quantity += quantity;
+
+    if(product.quantity < 1) {
+      return res.status(400).send('Quantity must be at least 1');
+    }
+
+    await cart.save();
+    
+    res.status(200).send(cart);
+
+  } catch (error) {
+    console.error('Error updating cart item:', error);
+    res.status(500).send('Internal server error');
+  }
+};
+
+
+module.exports = { addToCart, getCart, deleteFromCart, updateQuantity };
