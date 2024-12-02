@@ -207,7 +207,7 @@ function ProductDetails() {
           </Link>
 
           <div className="mt-10 ml-3 flex items-center max-md:mt-5 max-md:flex-col max-md:items-start">
-            <h1
+            {/* <h1
               className="flex items-center cursor-pointer hover:text-blue-500"
               onClick={toggleHeart}
             >
@@ -233,7 +233,7 @@ function ProductDetails() {
                 </svg>
               )}
               Add to wishlist
-            </h1>
+            </h1> */}
             {/* <h1 className="pl-12 flex items-center cursor-pointer hover:text-blue-500 max-md:pl-0">
               Add to compare
             </h1> */}

@@ -47,6 +47,22 @@ const orderSchema = new mongoose.Schema(
       enum: ["Cash on Delivery", "Credit Card", "Debit Card", "UPI"],
       required: true,
     },
+    CustomerName : {
+      type: String,
+      required: true,
+    },
+    Email : {
+      type: String,
+      required: true,
+    },
+    Phone : {
+      type: Number,
+      required: true,
+    },
+    notes : {
+      type: String,
+      required: false,
+    }, 
   },
   { timestamps: true }
 );

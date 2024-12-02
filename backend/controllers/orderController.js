@@ -4,7 +4,13 @@ const Cart = require("../models/cart");
 // Create a new order
 const createOrder = async (req, res) => {
   try {
-    const { shippingAddress, paymentMethod } = req.body;
+    const { totalAmount,
+      shippingAddress,
+      paymentMethod,
+      CustomerName,
+      Email,
+      Phone,
+      notes } = req.body;
 
     // Fetch the authenticated user's cart
     const cart = await Cart.findOne({ userId: req.user._id });
@@ -13,10 +19,10 @@ const createOrder = async (req, res) => {
     }
 
     // Calculate the total amount
-    const totalAmount = cart.products.reduce(
-      (sum, item) => sum + item.price * item.quantity,
-      0
-    );
+    // const totalAmount = cart.products.reduce(
+    //   (sum, item) => sum + item.price * item.quantity,
+    //   0
+    // );
 
     // Create an order
     const order = new Order({
@@ -25,6 +31,10 @@ const createOrder = async (req, res) => {
       totalAmount,
       shippingAddress,
       paymentMethod,
+      CustomerName,
+      Email,
+      Phone,
+      notes
     });
 
     await order.save();
